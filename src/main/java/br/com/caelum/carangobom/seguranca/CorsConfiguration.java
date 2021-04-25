@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom;
+package br.com.caelum.carangobom.seguranca;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

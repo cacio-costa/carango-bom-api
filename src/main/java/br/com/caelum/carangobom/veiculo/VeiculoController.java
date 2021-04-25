@@ -2,15 +2,12 @@ package br.com.caelum.carangobom.veiculo;
 
 import br.com.caelum.carangobom.marca.Marca;
 import br.com.caelum.carangobom.marca.MarcaRepository;
-import br.com.caelum.carangobom.seguranca.Usuario;
+import br.com.caelum.carangobom.veiculo.dto.VeiculoDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,6 +16,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/veiculos")
@@ -30,13 +29,17 @@ public class VeiculoController {
     private VeiculoRepository veiculoRepository;
 
     @GetMapping
-    public List<Veiculo> listaVeiculos() {
-        return veiculoRepository.findAll();
+    public List<VeiculoDto> listaVeiculos() {
+        return veiculoRepository.findAll()
+                .stream()
+                .map(v -> VeiculoDto.comMarca(v, marcaRepository))
+                .collect(toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Veiculo> veiculoPorId(@PathVariable Long id) {
+    public ResponseEntity<VeiculoDto> veiculoPorId(@PathVariable Long id) {
         return veiculoRepository.findById(id)
+                .map(v -> VeiculoDto.comMarca(v, marcaRepository))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -72,10 +75,10 @@ public class VeiculoController {
 
     @InitBinder("veiculo")
     public void configuraValidadores(WebDataBinder binder) {
-        binder.addValidators(new ValidacaoDeMarcaExistente());
+        binder.addValidators(new ValidacaoDeMarcaInexistente());
     }
 
-    private class ValidacaoDeMarcaExistente implements Validator {
+    private class ValidacaoDeMarcaInexistente implements Validator {
 
         @Override
         public boolean supports(Class<?> aClass) {
