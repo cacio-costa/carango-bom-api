@@ -16,11 +16,11 @@ public class CredenciaisDto {
     @NotBlank @Size(min = 6)
     private String password;
 
-    public UsernamePasswordAuthenticationToken getAutenticacao() {
+    public UsernamePasswordAuthenticationToken toAutenticacao() {
         return new UsernamePasswordAuthenticationToken(username, password);
     }
 
-    public Usuario getUsuario() {
+    public Usuario toUsuario() {
         return new Usuario(username, password);
     }
 

@@ -17,8 +17,7 @@ public class SwaggerConfiguration {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("br.com.caelum.carangobom"))
                 .paths(PathSelectors.ant("/**"))
-                .build()
-                .ignoredParameterTypes(Usuario.class);
+                .build();
     }
 
 }

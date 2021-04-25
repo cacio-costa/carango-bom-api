@@ -1,20 +1,15 @@
 package br.com.caelum.carangobom.seguranca;
 
-import br.com.caelum.carangobom.seguranca.dto.UsuarioDto;
 import br.com.caelum.carangobom.seguranca.exception.UsuarioExistenteException;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 @AllArgsConstructor
@@ -52,18 +47,21 @@ public class UsuarioService implements UserDetailsService {
 
     }
 
-    public void alteraSenha(Usuario usuario) {
+    public Usuario alteraSenha(Usuario usuario) {
         Usuario usuarioCadastrado = recuperaPeloUsername(usuario.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário inexistente: " + usuario.getUsername()));
 
         String senhaCodificada = passwordEncoder.encode(usuario.getPassword());
         usuarioCadastrado.setPassword(senhaCodificada);
+
+        return usuarioCadastrado;
     }
 
-    public void removeUsuario(String username) {
+    public Usuario removeUsuario(String username) {
         Usuario usuario = recuperaPeloUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário inexistente: " + username));
 
         usuarioRepository.delete(usuario);
+        return usuario;
     }
 }

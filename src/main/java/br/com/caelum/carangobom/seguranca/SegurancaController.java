@@ -50,35 +50,35 @@ public class SegurancaController {
 
     @PostMapping("/usuarios")
     public ResponseEntity<UsuarioDto> cria(@Valid @RequestBody CredenciaisDto credenciais, UriComponentsBuilder uriBuilder) throws UsuarioExistenteException {
-        Usuario novoUsuario = usuarioService.salva(credenciais.getUsuario());
+        Usuario novoUsuario = usuarioService.salva(credenciais.toUsuario());
 
         URI uri = uriBuilder.path("/usuarios/{username}").buildAndExpand(novoUsuario.getUsername()).toUri();
         return ResponseEntity.created(uri).body(new UsuarioDto(novoUsuario));
     }
 
     @PutMapping("/usuarios/{username}/senha")
-    public ResponseEntity<?> alteraSenha(@Valid @RequestBody CredenciaisDto credenciais) {
+    public ResponseEntity<UsuarioDto> alteraSenha(@Valid @RequestBody CredenciaisDto credenciais) {
         try {
-            usuarioService.alteraSenha(credenciais.getUsuario());
-            return ResponseEntity.ok().build();
+            Usuario usuario = usuarioService.alteraSenha(credenciais.toUsuario());
+            return ResponseEntity.ok(new UsuarioDto(usuario));
         } catch (UsernameNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/usuarios/{username}")
-    public ResponseEntity<?> removeUsuario(@PathVariable String username) {
+    public ResponseEntity<UsuarioDto> removeUsuario(@PathVariable String username) {
         try {
-            usuarioService.removeUsuario(username);
-            return ResponseEntity.ok().build();
+            Usuario usuario = usuarioService.removeUsuario(username);
+            return ResponseEntity.ok(new UsuarioDto(usuario));
         } catch (UsernameNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping("/autenticacao")
-    public ResponseEntity<?> autentica(@RequestBody CredenciaisDto credenciais) {
-        Authentication credentials = credenciais.getAutenticacao();
+    public ResponseEntity<AutenticacaoDto> autentica(@RequestBody CredenciaisDto credenciais) {
+        Authentication credentials = credenciais.toAutenticacao();
 
         try {
             Authentication autenticacao = authenticationManager.authenticate(credentials);
@@ -88,7 +88,6 @@ public class SegurancaController {
 
             return ResponseEntity.ok(new AutenticacaoDto(new UsuarioDto(usuario), tokenJwt));
         } catch (AuthenticationException e) {
-            e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
     }
