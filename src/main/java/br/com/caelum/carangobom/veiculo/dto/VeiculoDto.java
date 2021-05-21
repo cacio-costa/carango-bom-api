@@ -4,7 +4,6 @@ import br.com.caelum.carangobom.marca.Marca;
 import br.com.caelum.carangobom.marca.MarcaRepository;
 import br.com.caelum.carangobom.veiculo.Veiculo;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -13,11 +12,11 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class VeiculoDto {
 
-    private Long id;
-    private String modelo;
-    private Integer ano;
-    private BigDecimal valor;
-    private Marca marca;
+    private final Long id;
+    private final String modelo;
+    private final Integer ano;
+    private final BigDecimal valor;
+    private final Marca marca;
 
     public static VeiculoDto comMarca(Veiculo veiculo, MarcaRepository marcaRepository) {
         Marca marca = marcaRepository.findById(veiculo.getMarcaId()).orElse(new Marca(-1L, "NÃO INFORMADA"));

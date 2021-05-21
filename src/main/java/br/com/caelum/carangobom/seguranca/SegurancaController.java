@@ -11,7 +11,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -30,7 +29,6 @@ public class SegurancaController {
     private final UsuarioService usuarioService;
     private final GerenciadorDeTokenJwt gerenciadorDeToken;
     private final AuthenticationManager authenticationManager;
-    private final PasswordEncoder encoder;
 
     @GetMapping("/usuarios")
     public List<UsuarioDto> lista() {

@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -21,7 +19,7 @@ public class DashboardController {
     public List<MontanteDto> dashboard() {
         return veiculoRepository.consolidaMontanteDeVeiculosPorMarca()
                 .stream()
-                .map(registro -> new MontanteDto(registro))
+                .map(MontanteDto::new)
                 .collect(toList());
     }
 

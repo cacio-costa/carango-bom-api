@@ -11,13 +11,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class GerenciadorDeTokenJwt {
 
-    private String secret;
-    private long expirationInMillis;
+    private final String secret;
+    private final long expirationInMillis;
 
     public GerenciadorDeTokenJwt(@Value("${jwt.secret}") String secret,
                                @Value("${jwt.expiration}") long expirationInMillis) {
@@ -55,8 +54,7 @@ public class GerenciadorDeTokenJwt {
         usuario.setUsername(claims.getSubject());
 
         List<String> perfis = claims.get("perfis", List.class);
-        perfis.stream()
-            .forEach(perfil -> usuario.adicionaPerfil(Perfil.PERFIS.valueOf(perfil)));
+        perfis.forEach(perfil -> usuario.adicionaPerfil(Perfil.PERFIS.valueOf(perfil)));
 
         return usuario;
     }

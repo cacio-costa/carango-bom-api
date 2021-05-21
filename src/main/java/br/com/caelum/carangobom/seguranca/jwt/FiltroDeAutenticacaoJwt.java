@@ -19,7 +19,7 @@ import java.io.IOException;
 @AllArgsConstructor
 public class FiltroDeAutenticacaoJwt extends OncePerRequestFilter {
 
-    private GerenciadorDeTokenJwt gerenciadorDeToken;
+    private final GerenciadorDeTokenJwt gerenciadorDeToken;
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain chain)
@@ -41,7 +41,7 @@ public class FiltroDeAutenticacaoJwt extends OncePerRequestFilter {
         String bearerToken = request.getHeader("Authorization");
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7, bearerToken.length());
+            return bearerToken.substring(7);
         }
 
         return null;

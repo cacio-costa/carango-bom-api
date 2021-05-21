@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 public class Perfil implements GrantedAuthority {
 
-    public static enum PERFIS {
+    public enum PERFIS {
         ADMIN;
 
         public String getRole() {
