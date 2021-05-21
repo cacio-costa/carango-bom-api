@@ -17,6 +17,9 @@
 	<properties>
 		<java.version>11</java.version>
 		<surefire.skip>false</surefire.skip>
+		<sonar.projectKey>cacio-costa_carango-bom-api</sonar.projectKey>
+		<sonar.organization>cacio-costa-github</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<dependencies>
