@@ -30,18 +30,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/autenticacao/**", "/codificacao/**").permitAll()
+                .antMatchers("/autenticacao/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/veiculos/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/marcas/**").permitAll()
                 .antMatchers("/actuator/**").permitAll()
                 .antMatchers("/usuarios/**").hasRole(Perfil.PERFIS.ADMIN.name())
                 .anyRequest().authenticated()
-                .and().cors()
-                .and().csrf().disable()
+            .and()
+                .cors()
+            .and()
+                .csrf().disable()
                 .formLogin().disable()
                 .httpBasic().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .addFilterBefore(filtroDeAutenticacao, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling().authenticationEntryPoint(entryPoint);
+                .exceptionHandling()
+                    .authenticationEntryPoint(entryPoint);
     }
 
     @Override
