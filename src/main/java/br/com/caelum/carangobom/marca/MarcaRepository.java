@@ -10,7 +10,6 @@ public interface MarcaRepository extends Repository<Marca, Long> {
     void delete(Marca marca);
     Marca save(Marca marca);
 
-    boolean existsById(Long id);
     Optional<Marca> findById(Long id);
 
     List<Marca> findAllByOrderByNome();

@@ -12,7 +12,6 @@ public interface VeiculoRepository extends Repository<Veiculo, Long> {
     void delete(Veiculo veiculo);
     Veiculo save(Veiculo veiculo);
 
-    boolean existsById(Long id);
     Optional<Veiculo> findById(Long id);
 
     @Query(

@@ -25,8 +25,8 @@ import static java.util.stream.Collectors.toList;
 @AllArgsConstructor
 public class VeiculoController {
 
-    private MarcaRepository marcaRepository;
-    private VeiculoRepository veiculoRepository;
+    private final MarcaRepository marcaRepository;
+    private final VeiculoRepository veiculoRepository;
 
     @GetMapping
     public List<VeiculoDto> listaVeiculos() {

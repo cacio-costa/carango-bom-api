@@ -1,6 +1,5 @@
 package br.com.caelum.carangobom;
 
-import br.com.caelum.carangobom.seguranca.Usuario;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;

@@ -1,6 +1,7 @@
 package br.com.caelum.carangobom.seguranca.jwt;
 
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,15 +17,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Profile("!test")
 @AllArgsConstructor
 public class FiltroDeAutenticacaoJwt extends OncePerRequestFilter {
 
-    private GerenciadorDeTokenJwt gerenciadorDeToken;
+    private final GerenciadorDeTokenJwt gerenciadorDeToken;
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain chain)
     throws ServletException, IOException {
-
         String jwt = extraiTokenDaRequisicao(req);
 
         if (gerenciadorDeToken.isValid(jwt)) {
@@ -41,7 +42,7 @@ public class FiltroDeAutenticacaoJwt extends OncePerRequestFilter {
         String bearerToken = request.getHeader("Authorization");
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7, bearerToken.length());
+            return bearerToken.substring(7);
         }
 
         return null;

@@ -7,8 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class AutenticacaoDto {
 
-    private UsuarioDto usuario;
-    private String token;
+    private final UsuarioDto usuario;
+    private final String token;
 
 }
 
