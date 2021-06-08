@@ -1,6 +1,9 @@
 package br.com.caelum.carangobom.marca;
 
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -20,11 +23,13 @@ public class MarcaController {
     private final MarcaRepository marcaRepository;
 
     @GetMapping
+    @Cacheable("listagemDeMarcas")
     public List<Marca> listaMarcas() {
         return marcaRepository.findAllByOrderByNome();
     }
 
     @GetMapping("/{id}")
+    @Cacheable("marcaPorId")
     public ResponseEntity<Marca> marcaPorId(@PathVariable Long id) {
         return marcaRepository.findById(id)
                 .map(ResponseEntity::ok)
@@ -32,6 +37,7 @@ public class MarcaController {
     }
 
     @PostMapping
+    @CacheEvict(value = "listagemDeMarcas", allEntries = true)
     public ResponseEntity<Marca> cadastraMarca(@Valid @RequestBody Marca novaMarca, UriComponentsBuilder uriBuilder) {
         Marca marcaSalva = marcaRepository.save(novaMarca);
 
@@ -43,6 +49,10 @@ public class MarcaController {
     }
 
     @PutMapping("/{id}")
+    @Caching(evict = {
+        @CacheEvict(value = "listagemDeMarcas", allEntries = true),
+        @CacheEvict(value = "marcaPorId", key = "#id")
+    })
     public ResponseEntity<Marca> alteraNome(@PathVariable Long id, @Valid @RequestBody Marca marcaAlterada) {
         return marcaRepository.findById(id)
                 .map(marcaCadastrada -> {
@@ -53,6 +63,10 @@ public class MarcaController {
     }
 
     @DeleteMapping("/{id}")
+    @Caching(evict = {
+        @CacheEvict(value = "listagemDeMarcas", allEntries = true),
+        @CacheEvict(value = "marcaPorId", key = "#id")
+    })
     public ResponseEntity<Marca> deletaMarca(@PathVariable Long id) {
         Optional<Marca> possivelMarca = marcaRepository.findById(id);
         possivelMarca.ifPresent(marcaRepository::delete);
