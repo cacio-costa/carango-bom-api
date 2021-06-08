@@ -14,9 +14,9 @@ import java.io.IOException;
 @Slf4j
 @Component
 @Profile("test")
-public class FiltroDeAutenticacaoJwt extends OncePerRequestFilter {
+public class FiltroDeAutenticacaoJwtFake extends OncePerRequestFilter implements FiltroDeAutenticacaoJwt {
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.warn("PASSOU PELO FILTRO DE TESTE");
         filterChain.doFilter(request, response);
     }
