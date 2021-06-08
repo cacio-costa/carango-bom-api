@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.seguranca;
+package br.com.caelum.carangobom.seguranca.dominio;
 
 import org.springframework.data.repository.Repository;
 

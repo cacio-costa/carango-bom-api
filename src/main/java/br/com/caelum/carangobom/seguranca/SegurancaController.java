@@ -1,8 +1,9 @@
 package br.com.caelum.carangobom.seguranca;
 
-import br.com.caelum.carangobom.seguranca.dto.AutenticacaoDto;
-import br.com.caelum.carangobom.seguranca.dto.CredenciaisDto;
-import br.com.caelum.carangobom.seguranca.dto.UsuarioDto;
+import br.com.caelum.carangobom.seguranca.dominio.Usuario;
+import br.com.caelum.carangobom.seguranca.dto.output.AutenticacaoDto;
+import br.com.caelum.carangobom.seguranca.dto.input.CredenciaisDto;
+import br.com.caelum.carangobom.seguranca.dto.output.UsuarioDto;
 import br.com.caelum.carangobom.seguranca.exception.UsuarioExistenteException;
 import br.com.caelum.carangobom.seguranca.jwt.GerenciadorDeTokenJwt;
 import lombok.AllArgsConstructor;

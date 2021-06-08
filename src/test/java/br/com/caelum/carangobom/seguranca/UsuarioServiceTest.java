@@ -1,18 +1,16 @@
 package br.com.caelum.carangobom.seguranca;
 
+import br.com.caelum.carangobom.seguranca.dominio.Usuario;
+import br.com.caelum.carangobom.seguranca.dominio.UsuarioRepository;
 import br.com.caelum.carangobom.seguranca.exception.UsuarioExistenteException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;

@@ -1,5 +1,8 @@
 package br.com.caelum.carangobom.seguranca;
 
+import br.com.caelum.carangobom.seguranca.dominio.Perfil;
+import br.com.caelum.carangobom.seguranca.dominio.Usuario;
+import br.com.caelum.carangobom.seguranca.dominio.UsuarioRepository;
 import br.com.caelum.carangobom.seguranca.exception.UsuarioExistenteException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

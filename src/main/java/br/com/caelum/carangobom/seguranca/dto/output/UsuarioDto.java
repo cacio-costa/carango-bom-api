@@ -1,7 +1,7 @@
-package br.com.caelum.carangobom.seguranca.dto;
+package br.com.caelum.carangobom.seguranca.dto.output;
 
-import br.com.caelum.carangobom.seguranca.Perfil;
-import br.com.caelum.carangobom.seguranca.Usuario;
+import br.com.caelum.carangobom.seguranca.dominio.Perfil;
+import br.com.caelum.carangobom.seguranca.dominio.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

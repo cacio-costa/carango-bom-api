@@ -1,4 +1,4 @@
-package br.com.caelum.carangobom.seguranca.dto;
+package br.com.caelum.carangobom.seguranca.dto.output;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

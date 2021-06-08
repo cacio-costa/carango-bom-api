@@ -1,7 +1,7 @@
 package br.com.caelum.carangobom.seguranca.jwt;
 
-import br.com.caelum.carangobom.seguranca.Perfil;
-import br.com.caelum.carangobom.seguranca.Usuario;
+import br.com.caelum.carangobom.seguranca.dominio.Perfil;
+import br.com.caelum.carangobom.seguranca.dominio.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;

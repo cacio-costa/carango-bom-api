@@ -1,5 +1,7 @@
-package br.com.caelum.carangobom.seguranca;
+package br.com.caelum.carangobom.seguranca.configuracao;
 
+import br.com.caelum.carangobom.seguranca.UsuarioService;
+import br.com.caelum.carangobom.seguranca.dominio.Perfil;
 import br.com.caelum.carangobom.seguranca.jwt.EntryPointAutenticacaoJwt;
 import br.com.caelum.carangobom.seguranca.jwt.FiltroDeAutenticacaoJwt;
 import lombok.AllArgsConstructor;

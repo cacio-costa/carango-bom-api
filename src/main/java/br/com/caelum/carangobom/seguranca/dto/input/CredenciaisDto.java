@@ -1,6 +1,6 @@
-package br.com.caelum.carangobom.seguranca.dto;
+package br.com.caelum.carangobom.seguranca.dto.input;
 
-import br.com.caelum.carangobom.seguranca.Usuario;
+import br.com.caelum.carangobom.seguranca.dominio.Usuario;
 import lombok.Data;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
