@@ -35,7 +35,7 @@ public class GerenciadorDeTokenJwt {
                 .claim("perfis", usuario.getNomesDosPerfis())
                 .setIssuedAt(now)
                 .setExpiration(expiration)
-                .signWith(SignatureAlgorithm.HS256, secret.getBytes()).compact();
+                .signWith(SignatureAlgorithm.HS512, secret.getBytes()).compact();
     }
 
     public boolean isValid(String jwt) {

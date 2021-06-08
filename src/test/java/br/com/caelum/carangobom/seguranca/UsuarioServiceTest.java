@@ -7,13 +7,17 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
+import static org.assertj.core.api.Assertions.*;
 
 class UsuarioServiceTest {
 
@@ -39,11 +43,40 @@ class UsuarioServiceTest {
     }
 
     @Test
+    void deveLancarExcecaoSeNaoEncontrarUsuarioPeloNome() {
+        when(repository.findByUsername("inexistente")).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> service.loadUserByUsername("inexistente"))
+            .isInstanceOf(UsernameNotFoundException.class)
+            .hasMessage("Usuário não encontrado: inexistente");
+    }
+
+    @Test
+    void naoDeveLancarExcecaoSeEncontrarUsuarioPeloNome() {
+        when(repository.findByUsername(usuario.getUsername())).thenReturn(Optional.of(usuario));
+
+        UserDetails details = service.loadUserByUsername(usuario.getUsername());
+        assertThat(details)
+            .isInstanceOf(Usuario.class)
+            .extracting("username")
+                .isEqualTo(usuario.getUsername());
+    }
+
+    @Test
     void deveSalvarUsuarioSeEleNaoExistir() throws UsuarioExistenteException {
         when(repository.findByUsername(usuario.getUsername())).thenReturn(Optional.empty());
 
         service.salva(usuario);
         verify(repository).save(usuario);
+    }
+
+    @Test
+    void deveLancarErroAoCadastrarUsuarioJahExistente() throws UsuarioExistenteException {
+        when(repository.findByUsername(usuario.getUsername())).thenReturn(Optional.of(usuario));
+
+        assertThatThrownBy(() -> service.salva(usuario))
+            .isInstanceOf(UsuarioExistenteException.class);
+
+        verify(repository, never()).save(any());
     }
 
     @Test
