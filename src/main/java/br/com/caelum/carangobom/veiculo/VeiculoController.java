@@ -75,25 +75,8 @@ public class VeiculoController {
 
     @InitBinder("veiculo")
     public void configuraValidadores(WebDataBinder binder) {
-        binder.addValidators(new ValidacaoDeMarcaInexistente());
+        binder.addValidators(new ValidacaoDeMarcaInexistente(marcaRepository));
     }
 
-    private class ValidacaoDeMarcaInexistente implements Validator {
-
-        @Override
-        public boolean supports(Class<?> aClass) {
-            return Veiculo.class.isAssignableFrom(aClass);
-        }
-
-        @Override
-        public void validate(Object o, Errors errors) {
-            Veiculo v = (Veiculo) o;
-
-            Optional<Marca> possivelMarca = marcaRepository.findById(v.getMarcaId());
-            if (possivelMarca.isEmpty()) {
-                errors.rejectValue("marcaId", "veiculo.marca.id.inexistente", "Marca inexistente: " + v.getMarcaId());
-            }
-        }
-    }
 
 }

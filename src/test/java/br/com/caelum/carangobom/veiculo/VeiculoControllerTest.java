@@ -31,17 +31,12 @@ class VeiculoControllerTest {
 
     VeiculoController controller;
     Veiculo palio = new Veiculo(1L, "Palio", 2008, new BigDecimal("15000.00"), 1L);
-    private UriComponentsBuilder uriBuilder;
+    UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromUriString("http://localhost:8080");
 
     @BeforeEach
     void configura() {
         openMocks(this);
-
         controller = new VeiculoController(marcaRepository, veiculoRepository);
-        uriBuilder = UriComponentsBuilder.newInstance()
-                .scheme("http")
-                .host("localhost")
-                .port(8080);
     }
 
     @Test
