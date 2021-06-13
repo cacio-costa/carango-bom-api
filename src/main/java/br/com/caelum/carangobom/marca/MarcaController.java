@@ -29,7 +29,7 @@ public class MarcaController {
     }
 
     @GetMapping("/{id}")
-    @Cacheable("marcaPorId")
+//    @Cacheable("marcaPorId")
     public ResponseEntity<Marca> marcaPorId(@PathVariable Long id) {
         return marcaRepository.findById(id)
                 .map(ResponseEntity::ok)
@@ -49,10 +49,7 @@ public class MarcaController {
     }
 
     @PutMapping("/{id}")
-    @Caching(evict = {
-        @CacheEvict(value = "listagemDeMarcas", allEntries = true),
-        @CacheEvict(value = "marcaPorId", key = "#id")
-    })
+    @CacheEvict(value = "listagemDeMarcas", allEntries = true)
     public ResponseEntity<Marca> alteraNome(@PathVariable Long id, @Valid @RequestBody Marca marcaAlterada) {
         return marcaRepository.findById(id)
                 .map(marcaCadastrada -> {
@@ -63,10 +60,7 @@ public class MarcaController {
     }
 
     @DeleteMapping("/{id}")
-    @Caching(evict = {
-        @CacheEvict(value = "listagemDeMarcas", allEntries = true),
-        @CacheEvict(value = "marcaPorId", key = "#id")
-    })
+    @CacheEvict(value = "listagemDeMarcas", allEntries = true)
     public ResponseEntity<Marca> deletaMarca(@PathVariable Long id) {
         Optional<Marca> possivelMarca = marcaRepository.findById(id);
         possivelMarca.ifPresent(marcaRepository::delete);
